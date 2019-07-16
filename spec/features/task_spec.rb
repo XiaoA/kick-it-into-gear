@@ -46,4 +46,17 @@ describe "index" do
       expect(page).to have_content("Tasks")
     end
   end
+
+  describe "show" do
+    it "can be reached successfully" do
+      visit tasks_path(@task)
+      expect(page.status_code).to eq(200)
+    end
+
+    it "displays the current task" do
+      task = Task.create(title: "buy a cat", description: "Meow dui in ligula mollis ultricies.", status: 0)
+      visit tasks_path(task)
+      expect(page).to have_content(/buy a cat/)
+    end
+  end
 end
