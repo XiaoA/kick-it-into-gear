@@ -21,5 +21,29 @@ describe "index" do
   end
 
   describe "creation" do
+    before do
+      visit new_task_path
+    end
+
+    it "can be reached successfully" do
+      expect(page.status_code).to eq(200)      
+    end
+
+    it "can create a new task" do
+   
+    fill_in "Title", with: "Buy veggies"
+    fill_in "Description", with: "carrots, cabbage, and cucumbers"
+   
+    expect { click_on "Create Task" }.to change(Task, :count).by(1)
+    end
+
+    it "redirects to the Index page after saving a new task" do
+      fill_in "Title", with: "Buy veggies"
+      fill_in "Description", with: "carrots, cabbage, and cucumbers"
+
+      click_on "Create Task"
+
+      expect(page).to have_content("Tasks")
+    end
   end
 end
