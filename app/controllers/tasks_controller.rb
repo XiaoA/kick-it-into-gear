@@ -32,7 +32,14 @@ class TasksController < ApplicationController
       render :edit 
     end
   end
-  
+
+  def destroy
+    @task = Task.find(params[:id])
+    @task.destroy
+    redirect_to tasks_url, notice: 'Your task was deleted.'
+  end
+
+
   private
 
   def task_params

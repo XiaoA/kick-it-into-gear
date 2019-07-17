@@ -73,6 +73,15 @@ describe "Task Actions", type: :feature do
       click_on "Update Task"
     end
   end
+
+  describe "destroy" do
+    it "can be deleted" do
+      task = Task.create(title: "Buy bread", description: "Get some bread.", status: 0)   
+      visit task_path(task)
+
+      expect { click_on "Delete" }.to change(Task, :count).by(-1)
+    end
+  end
 end
 
 
