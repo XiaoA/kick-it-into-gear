@@ -1,8 +1,9 @@
 class TasksController < ApplicationController
-  before_action :set_task, only: [:show, :edit, :update, :destroy]
+  before_action :set_task, only: [:show, :edit, :update, :destroy, :mark_completed]
 
   def index
     @tasks = Task.all
+  
   end
 
   def new
@@ -36,7 +37,6 @@ class TasksController < ApplicationController
     @task.destroy
     redirect_to tasks_url, notice: 'Your task was deleted.'
   end
-
 
   private
 
