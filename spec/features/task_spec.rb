@@ -56,7 +56,7 @@ describe "Task Actions", type: :feature do
     end
 
     it "displays the current task" do
-      task = Task.create(title: "buy a cat", description: "Meow dui in ligula mollis ultricies.", status: 0)
+      task = Task.create(title: "buy a cat", description: "Meow dui in ligula mollis ultricies.", status: 0, due_date: Date.today)
       visit tasks_path(task)
       expect(page).to have_content(/buy a cat/)
     end
