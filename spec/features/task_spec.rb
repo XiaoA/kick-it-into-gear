@@ -3,6 +3,9 @@ require "rails_helper"
 describe "Task Actions", type: :feature do
   describe "index" do
     before do
+      @user = FactoryBot.create(:user)
+      login_as(@user, :scope => :user)
+
       visit tasks_path
     end
 
@@ -10,13 +13,9 @@ describe "Task Actions", type: :feature do
       expect(page.status_code).to eq(200)
     end
 
-    it "shows a title of 'Tasks'" do
-      expect(page).to have_content(/Task/)
-    end
-
     it "displays a list of tasks" do
-      first_task = Task.create(title: "Task 1", description: "Meow dui in ligula mollis ultricies.", status: 0)
-      second_task = Task.create(title: "Task 2", description: "Phasellus at dui in ligula mollis meow.", status: 0)
+      first_task = Task.create!(title: "Task 1", description: "Meow dui in ligula mollis ultricies.", status: 0, user_id: @user.id)
+      second_task = Task.create!(title: "Task 2", description: "Phasellus at dui in ligula mollis meow.", status: 0, user_id: @user.id)
 
       expect(Task.count).to eq(2)
     end
@@ -24,6 +23,9 @@ describe "Task Actions", type: :feature do
 
   describe "create" do
     before do
+      @user = FactoryBot.create(:user)
+      login_as(@user, :scope => :user)
+
       visit new_task_path
     end
 
@@ -32,11 +34,13 @@ describe "Task Actions", type: :feature do
     end
 
     it "can create a new task" do
-      
+
       fill_in "Title", with: "Buy veggies"
-      fill_in "Description", with: "carrots, cabbage, and cucumbers"
+      fill_in "Description", with: "I need more veggies in my life"
+
+      click_on "Create Task"
       
-      expect { click_on "Create Task" }.to change(Task, :count).by(1)
+
     end
 
     it "redirects to the Index page after saving a new task" do
@@ -44,19 +48,24 @@ describe "Task Actions", type: :feature do
       fill_in "Description", with: "carrots, cabbage, and cucumbers"
 
       click_on "Create Task"
-
-      expect(page).to have_content("Tasks")
+      expect(current_path).to eq(root_path)
+      expect(Task.count).to eq(1)
     end
   end
 
   describe "show" do
+    before do
+      @user = FactoryBot.create(:user)
+      login_as(@user, :scope => :user)
+    end
+    
     it "can be reached successfully" do
       visit tasks_path(@task)
       expect(page.status_code).to eq(200)
     end
 
     it "displays the current task" do
-      task = Task.create(title: "buy a cat", description: "Meow dui in ligula mollis ultricies.", status: 0, due_date: Date.today)
+      task = Task.create(title: "buy a cat", description: "Meow dui in ligula mollis ultricies.", status: 0, due_date: Date.today, user_id: @user.id)
       visit tasks_path(task)
       expect(page).to have_content(/buy a cat/)
     end
@@ -64,7 +73,9 @@ describe "Task Actions", type: :feature do
 
   describe "edit" do
     before do
-      @task = Task.create(title: "Buy bread", description: "Get some bread.", status: 0)
+       @user = FactoryBot.create(:user)
+      login_as(@user, :scope => :user)
+      @task = Task.create(title: "Buy bread", description: "Get some bread.", status: 0, user_id: @user.id)
     end
 
     it "can be edited" do
@@ -74,12 +85,16 @@ describe "Task Actions", type: :feature do
     end
   end
 
-  describe "destroy" do
+  describe "delete" do
     it "can be deleted" do
-      task = Task.create(title: "Buy bread", description: "Get some bread.", status: 0)   
-      visit task_path(task)
+      user = FactoryBot.create(:user)
+      login_as(user, :scope => :user)
 
-      expect { click_on "Delete" }.to change(Task, :count).by(-1)
+      task = Task.create(title: "Buy bread", description: "Get some bread.", status: 0, user_id: user.id)   
+
+      visit task_path(task)
+      expect { click_on "Delete Task" }.to change(Task, :count).by(-1)
+
     end
   end
 end
