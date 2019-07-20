@@ -1,34 +1,67 @@
 <div class="container">
-  <h2 class="text-center">Tasks</h2>
   <div class="row">
-    <% Task.all.each do |task| %>
-      <div class="col-sm-4">
-        <div class="card">
-          <div class="card-header">
-            <p>Status: <strong><%= task.status %></strong></p>
-          </div>
-          <div class="card-body">
-
-            <h3 class="card-title"><%= task.title %></h3>
-            <p class="card-text"><%= task.description %></p>
-          </div>
-          <div class="card-footer">
-            <% if task.due_date != nil %>
-              <h4 class="card-subtitle mb-2 text-muted">
-                Due date: <%= task.due_date  %>
-              </h4>
-            <% else %>
-              <h4 class="card-subtitle mb-2 text-muted">
-                <%= link_to "Add a due date", edit_task_path(task) %>
-              </h4>
-            <% end %>
-
-            <%= link_to "View Details", task_path(task), class: "btn btn-primary" %>
-
-          </div>
-
+    <div class="md-col-4">
+      <h2 class="text-center">Enter a new task!</h2>
+      <div class="input-group mb-3 mt-3">
+        <input type="text" class="form-control" placeholder="Buy bread" aria-label="Buy bread" aria-describedby="button-addon2">
+        <div class="input-group-append">
+          <button class="btn btn-primary" type="button" id="button-addon2">Button</button>
         </div>
       </div>
-    <% end %>
+    </div>
   </div>
 </div>
+
+
+<div class="container">
+  <% if @tasks.present?  %>
+    <h2 class="text-center"><%= current_user.first_name %>'s Tasks</h2>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">Status</th>
+          <th scope="col">Title</th>
+          <th scope="col">Description</th>
+          <th scope="col">Due Date</th>
+        </tr>
+      </thead>
+      <% @tasks.each do |task| %>
+        <tbody>
+          <tr>
+            <td>
+            <select class="custom-select custom-select-sm">
+              <option selected><%= task.status.capitalize %></option>
+              <option value="todo">Todo</option>
+              <option value="done">Done</option>
+              <option value="waiting">Waiting</option>
+              <option value="canceled">Canceled</option>
+            </select>
+            </td>
+            <td><%= task.title %></td>
+            <td><%= task.description %></td>
+            <td>
+              <% if task.due_date != nil %>
+                <h4 class="card-subtitle mb-2 text-muted">
+                  <%= task.due_date  %>
+                </h4>
+              <% else %>
+                <p class="card-subtitle mb-2 text-muted">
+                  <%= link_to "Add a due date", edit_task_path(task) %>
+                </p>
+              <% end %>
+            </td>
+          </tr>
+      <% end %>
+        </tbody>
+    </table>
+
+
+
+  <% else %>
+    <h2 class="text-center"> You don't have any tasks yet. Let's create some!</h2>
+
+  <% end %>
+</div>
+
+
+
