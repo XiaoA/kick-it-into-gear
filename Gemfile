@@ -21,7 +21,11 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.8', '>= 3.8.2'
   gem 'capybara', '~> 3.26'
   gem 'database_cleaner', '~> 1.7'
+  gem 'factory_bot_rails', '~> 5.0', '>= 5.0.2'
+end
 
+group :test do
+  gem 'shoulda-matchers', '~> 4.1', '>= 4.1.1'
 end
 
 group :development do
