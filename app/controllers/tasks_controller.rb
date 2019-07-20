@@ -1,9 +1,8 @@
 class TasksController < ApplicationController
-  before_action :set_task, only: [:show, :edit, :update, :destroy, :mark_completed]
-
-  def index
-    @tasks = Task.all
+  before_action :set_task, only: [:show, :edit, :update, :destroy]
   
+  def index
+    @tasks = current_user.tasks.all
   end
 
   def new
@@ -11,9 +10,10 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task = Task.new(task_params)
+    @task = current_user.tasks.new(task_params)
+    
     if @task.save
-      redirect_to action: :index, notice: "Your task was created."
+      redirect_to root_path, notice: "Your task was created."
     else
       render :new
     end
@@ -27,7 +27,7 @@ class TasksController < ApplicationController
 
   def update
     if @task.update(task_params)
-      redirect_to @task, notice: 'Your task was updated.'
+      redirect_to root_path, notice: 'Your task was updated.'
     else
       render :edit 
     end
