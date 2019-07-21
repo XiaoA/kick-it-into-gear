@@ -1,29 +1,38 @@
+<div class="modal-header">
+  <h5 class="modal-title" id="exampleModalLabel">Update this Task!</h5>
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <%= form_with model: @task do |form| %>
 
-<%= form_with model: @task do |form| %>
+    <div class="field-group">
+      <%= form.label :title %>
+      <%= form.text_field :title %>
+    </div>
 
-  <div class="field">
-    <%= form.label :title %>
-    <%= form.text_field :title %>
-  </div>
+    <div class="field-group">
+      <%= form.label :description %>
+      <%= form.text_area :description %>
+    </div>
 
-  <div class="field">
-    <%= form.label :description %>
-    <%= form.text_area :description %>
-  </div>
+    <div class="field-group">
+      <%= form.label :status %>
+      <%= form.select :status, options_for_select(Task.statuses.keys) %>
+    </div>
 
-  <div class="field">
-    <%= form.label :status %>
-    <%= form.select :status, options_for_select(Task.statuses.keys) %>
-  </div>
+    <div class="field-group">
+      <%= form.label :due_date %>
+      <%= form.date_field :due_date, data:{ provide:'datepicker' } %>
+    </div>
 
-  <div class="field">
-    <%= form.label :due_date %>
-    <%= form.date_field :due_date, data:{ provide:'datepicker' } %>
-  </div>
+    <div class="actions">
+      <%= form.submit %>
+    </div>
 
-  <div class="actions">
-    <%= form.submit %>
-  </div>
-
-<% end %>
-
+  <% end %>
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+</div>
