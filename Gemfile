@@ -12,10 +12,12 @@ gem 'coffee-rails', '~> 4.2'
 gem 'turbolinks', '~> 5'
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'bootstrap', '~> 4.3', '>= 4.3.1'
+gem 'bootstrap_form', '~> 4.2'
 gem 'jquery-rails', '~> 4.3', '>= 4.3.5'
 gem 'devise', '~> 4.6', '>= 4.6.2'
 gem 'font-awesome-rails', '~> 4.7', '>= 4.7.0.5'
 gem 'popper_js', '~> 1.14', '>= 1.14.5'
+
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

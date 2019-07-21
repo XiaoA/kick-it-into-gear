@@ -3,7 +3,8 @@
     <div class="md-col-4">
       <h2 class="text-center">Enter a new task!</h2>
       <div class="input-group mb-3 mt-3">
-        <input type="text" class="form-control" placeholder="Buy bread" aria-label="Buy bread" aria-describedby="button-addon2">
+        <input
+          type="text" class="form-control" placeholder="Buy bread" aria-label="Buy bread" aria-describedby="button-addon2">
         <div class="input-group-append">
           <button class="btn btn-primary" type="button" id="button-addon2">Button</button>
         </div>
@@ -44,20 +45,16 @@
               <% end %>
             </td>
             <td>
-
               <%= link_to "Edit", edit_task_path(task),  {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window', class: 'btn btn-primary btn-sm'}  %>
               <div id="modal-window" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
----
                     <div class="modal-header">
                       <h5 class="modal-title" id="exampleModalScrollableTitle">Edit Task</h5>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
                     </div>
-
-                    ---
                   </div>
                 </div>
               </div>
