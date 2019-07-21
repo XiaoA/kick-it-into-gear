@@ -23,20 +23,13 @@
           <th scope="col">Title</th>
           <th scope="col">Description</th>
           <th scope="col">Due Date</th>
+          <th scope="col">Edit</th>
         </tr>
       </thead>
       <% @tasks.each do |task| %>
         <tbody>
           <tr>
-            <td>
-            <select class="custom-select custom-select-sm">
-              <option selected><%= task.status.capitalize %></option>
-              <option value="todo">Todo</option>
-              <option value="done">Done</option>
-              <option value="waiting">Waiting</option>
-              <option value="canceled">Canceled</option>
-            </select>
-            </td>
+            <td><%= task.status.capitalize %></td>
             <td><%= task.title %></td>
             <td><%= task.description %></td>
             <td>
@@ -50,18 +43,16 @@
                 </p>
               <% end %>
             </td>
+            <td>
+              Edit
+            </td>
           </tr>
-      <% end %>
         </tbody>
+      <% end %>
     </table>
-
-
-
   <% else %>
     <h2 class="text-center"> You don't have any tasks yet. Let's create some!</h2>
-
   <% end %>
 </div>
-
 
 
