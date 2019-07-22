@@ -33,9 +33,9 @@
             <td><%= link_to "#{task.title}", task_path(task) %></td>
             <td>
               <% if task.due_date != nil %>
-                <h4 class="card-subtitle mb-2 text-muted">
-                  <%= task.due_date  %>
-                </h4>
+                <p class="card-subtitle mb-2 text-muted">
+                  <%= task.due_date.strftime("%B %d, %Y") %>
+                </p>
               <% else %>
                 <p class="card-subtitle mb-2 text-muted">
                   No due date
