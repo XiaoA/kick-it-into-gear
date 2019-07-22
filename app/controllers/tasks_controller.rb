@@ -1,12 +1,17 @@
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
-  
+
+
   def index
-    @tasks = current_user.tasks.all
+    @tasks = current_user.tasks.all.order("status ASC")
   end
 
   def new
     @task = Task.new
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def create
@@ -20,16 +25,21 @@ class TasksController < ApplicationController
   end
 
   def show
+    @display_due_date = @task.due_date
   end
 
   def edit
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def update
     if @task.update(task_params)
       redirect_to root_path, notice: 'Your task was updated.'
     else
-      render :edit 
+      render :edit
     end
   end
 
@@ -47,4 +57,5 @@ class TasksController < ApplicationController
   def set_task
     @task = Task.find(params[:id])
   end
+
 end

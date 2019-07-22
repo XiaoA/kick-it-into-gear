@@ -1,0 +1,12 @@
+<div class="modal-body">
+  <%= bootstrap_form_with model: @task do |form| %>
+      <%= form.text_field :title %>
+      <%= form.text_area :description %>
+      <%= form.select :status, options_for_select(Task.statuses.keys) %>
+      <%= form.date_field :due_date, data:{ provide:'datepicker' } %>
+      <%= form.submit %>
+  <% end %>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+</div>

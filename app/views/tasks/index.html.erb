@@ -1,34 +1,65 @@
 <div class="container">
-  <h2 class="text-center">Tasks</h2>
-  <div class="row">
-    <% Task.all.each do |task| %>
-      <div class="col-sm-4">
-        <div class="card">
-          <div class="card-header">
-            <p>Status: <strong><%= task.status %></strong></p>
-          </div>
-          <div class="card-body">
+  <% if @tasks.present?  %>
+    <h2 class="text-center"><%= current_user.first_name %>'s Tasks</h2>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">Status</th>
+          <th scope="col">Title</th>
+          <th scope="col">Description</th>
+          <th scope="col">Due Date</th>
+          <th scope="col">Edit</th>
+          <th scope="col">Delete</th>
+        </tr>
+      </thead>
+      <% @tasks.each do |task| %>
+        <tbody>
+          <tr>
+            <td>
+              <%= task.status.capitalize %>
+            </td>
+            
+            <td>
+              <div class="task-title" data-toggle="tooltip" data-placement="top" title="<%=task.title%>"><%= truncate task.title %></div>
+            </td>
 
-            <h3 class="card-title"><%= task.title %></h3>
-            <p class="card-text"><%= task.description %></p>
-          </div>
-          <div class="card-footer">
-            <% if task.due_date != nil %>
-              <h4 class="card-subtitle mb-2 text-muted">
-                Due date: <%= task.due_date  %>
-              </h4>
-            <% else %>
-              <h4 class="card-subtitle mb-2 text-muted">
-                <%= link_to "Add a due date", edit_task_path(task) %>
-              </h4>
-            <% end %>
+            <td>
+              <div class="task-description data-toggle="tooltip" data-placement="top" title="<%=task.description%>">
+                <%= truncate task.description %>
+              </div>
+            </td>
 
-            <%= link_to "View Details", task_path(task), class: "btn btn-primary" %>
+            <td>
+              <p class="task-due-date"><%= display_due_date(task) %></p>
+            </td>
 
-          </div>
+            <td>
+              <%= link_to "Edit", edit_task_path(task),  
+              {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window', class: 'btn btn-primary btn-sm'} %>
+              <div id="modal-window" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Edit Task</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </td>
 
-        </div>
-      </div>
-    <% end %>
-  </div>
+            <td>
+              <%= link_to "Delete", task_path(task), method: :delete, remote: true, class: "btn btn-danger btn-sm" %>
+            </td>
+          </tr>
+        </tbody>
+      <% end %>
+    </table>
+
+  <% else %>
+    <h2 class="text-center"> You don't have any tasks yet. Let's create some!</h2>
+  <% end %>
 </div>
+

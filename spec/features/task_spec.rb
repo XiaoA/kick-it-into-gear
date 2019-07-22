@@ -6,7 +6,7 @@ describe "Task Actions", type: :feature do
       @user = FactoryBot.create(:user)
       login_as(@user, :scope => :user)
 
-      visit tasks_path
+      visit root_path
     end
 
     it "can be reached successfully" do
@@ -26,24 +26,18 @@ describe "Task Actions", type: :feature do
       @user = FactoryBot.create(:user)
       login_as(@user, :scope => :user)
 
-      visit new_task_path
-    end
-
-    it "can be reached successfully" do
-      expect(page.status_code).to eq(200)      
+      visit root_path
+      click_on "Add Task"
     end
 
     it "can create a new task" do
-
       fill_in "Title", with: "Buy veggies"
       fill_in "Description", with: "I need more veggies in my life"
 
       click_on "Create Task"
-      
-
     end
 
-    it "redirects to the Index page after saving a new task" do
+    it "does not redirect from the Index page after saving a new task" do
       fill_in "Title", with: "Buy veggies"
       fill_in "Description", with: "carrots, cabbage, and cucumbers"
 
@@ -73,30 +67,35 @@ describe "Task Actions", type: :feature do
 
   describe "edit" do
     before do
-       @user = FactoryBot.create(:user)
+      @user = FactoryBot.create(:user)
       login_as(@user, :scope => :user)
       @task = Task.create(title: "Buy bread", description: "Get some bread.", status: 0, user_id: @user.id)
     end
 
     it "can be edited" do
-      visit edit_task_path(@task)
+      visit root_path
+      click_on "Edit"
+      
       find("#task_title").set("").set("Buy wheat bread")
       click_on "Update Task"
     end
   end
 
-  describe "delete" do
+  describe "delete", js: true do
+
     it "can be deleted" do
       user = FactoryBot.create(:user)
       login_as(user, :scope => :user)
 
+      current_user = user
       task = Task.create(title: "Buy bread", description: "Get some bread.", status: 0, user_id: user.id)   
+      visit root_path
+      click_on "Delete"
 
-      visit task_path(task)
-      expect { click_on "Delete Task" }.to change(Task, :count).by(-1)
-
+      expect(Task.count).to eq(0)
     end
   end
 end
+
 
 
