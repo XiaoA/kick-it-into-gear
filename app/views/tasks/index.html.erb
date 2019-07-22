@@ -18,6 +18,7 @@
           <th scope="col">Description</th>
           <th scope="col">Due Date</th>
           <th scope="col">Edit</th>
+          <th scope="col">Delete</th>
         </tr>
       </thead>
       <% @tasks.each do |task| %>
@@ -26,11 +27,8 @@
             <td><%= task.status.capitalize %></td>
             <td><%= link_to "#{task.title}", task_path(task) %></td>
             <td>
-<div class="task-description" data-toggle="tooltip" data-placement="top" title="<%=task.description%>"><%= truncate task.description %></div>
-
-
+           <div class="task-description" data-toggle="tooltip" data-placement="top" title="<%=task.description%>"><%= truncate task.description %></div>
             </td>
-
             <td>
               <% if task.due_date != nil %>
                 <p class="card-subtitle mb-2 text-muted">
@@ -48,7 +46,7 @@
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalScrollableTitle">Edit Task</h5>
+                      <h5 class="modal-title">Edit Task</h5>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
@@ -56,6 +54,9 @@
                   </div>
                 </div>
               </div>
+            </td>
+            <td>
+              <%= link_to "Delete", task_path(task), method: :delete, remote: true, class: "btn btn-danger btn-sm" %>
             </td>
           </tr>
         </tbody>
