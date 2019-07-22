@@ -18,5 +18,5 @@
 //= require popper
 //= require bootstrap-sprockets
 jQuery( function($) {
-    $('a').tooltip();
+    $('.task-description').tooltip();
 });
