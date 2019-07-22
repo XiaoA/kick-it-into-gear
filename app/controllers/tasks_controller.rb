@@ -4,11 +4,11 @@ class TasksController < ApplicationController
 
   def index
     @tasks = current_user.tasks.all.order("status ASC")
-   end
+  end
 
   def new
     @task = Task.new
-     respond_to do |format|
+    respond_to do |format|
       format.html
       format.js
     end
@@ -25,6 +25,7 @@ class TasksController < ApplicationController
   end
 
   def show
+    @display_due_date = @task.due_date
   end
 
   def edit
@@ -56,4 +57,5 @@ class TasksController < ApplicationController
   def set_task
     @task = Task.find(params[:id])
   end
+
 end

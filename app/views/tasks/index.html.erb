@@ -15,27 +15,27 @@
       <% @tasks.each do |task| %>
         <tbody>
           <tr>
-            <td><%= task.status.capitalize %></td>
             <td>
-           <div class="task-title" data-toggle="tooltip" data-placement="top" title="<%=task.title%>"><%= truncate task.title %></div>
+              <%= task.status.capitalize %>
+            </td>
+            
+            <td>
+              <div class="task-title" data-toggle="tooltip" data-placement="top" title="<%=task.title%>"><%= truncate task.title %></div>
             </td>
 
             <td>
-           <div class="task-description" data-toggle="tooltip" data-placement="top" title="<%=task.description%>"><%= truncate task.description %></div>
+              <div class="task-description data-toggle="tooltip" data-placement="top" title="<%=task.description%>">
+                <%= truncate task.description %>
+              </div>
             </td>
+
             <td>
-              <% if task.due_date != nil %>
-                <p class="card-subtitle mb-2 text-muted">
-                  <%= task.due_date.strftime("%B %d, %Y") %>
-                </p>
-              <% else %>
-                <p class="card-subtitle mb-2 text-muted">
-                  No due date
-                </p>
-              <% end %>
+              <p class="task-due-date"><%= display_due_date(task) %></p>
             </td>
+
             <td>
-              <%= link_to "Edit", edit_task_path(task),  {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window', class: 'btn btn-primary btn-sm'}  %>
+              <%= link_to "Edit", edit_task_path(task),  
+              {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window', class: 'btn btn-primary btn-sm'} %>
               <div id="modal-window" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
@@ -49,6 +49,7 @@
                 </div>
               </div>
             </td>
+
             <td>
               <%= link_to "Delete", task_path(task), method: :delete, data: { confirm: "Are you sure?" }, remote: true, class: "btn btn-danger btn-sm" %>
             </td>
@@ -56,9 +57,9 @@
         </tbody>
       <% end %>
     </table>
+
   <% else %>
     <h2 class="text-center"> You don't have any tasks yet. Let's create some!</h2>
   <% end %>
 </div>
-
 
