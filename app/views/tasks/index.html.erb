@@ -1,13 +1,4 @@
 <div class="container">
-  <div class="row">
-    <div class="md-col-4">
-      <h2 class="text-center">Enter a new task!</h2>
-      <%= link_to 'Add task', new_task_path,  {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window', class: 'btn btn-primary btn-lg'}  %>
-    </div>
-  </div>
-</div>
-
-<div class="container">
   <% if @tasks.present?  %>
     <h2 class="text-center"><%= current_user.first_name %>'s Tasks</h2>
     <table class="table table-hover">
@@ -25,7 +16,10 @@
         <tbody>
           <tr>
             <td><%= task.status.capitalize %></td>
-            <td><%= link_to "#{task.title}", task_path(task) %></td>
+            <td>
+           <div class="task-title" data-toggle="tooltip" data-placement="top" title="<%=task.title%>"><%= truncate task.title %></div>
+            </td>
+
             <td>
            <div class="task-description" data-toggle="tooltip" data-placement="top" title="<%=task.description%>"><%= truncate task.description %></div>
             </td>
@@ -56,7 +50,7 @@
               </div>
             </td>
             <td>
-              <%= link_to "Delete", task_path(task), method: :delete, remote: true, class: "btn btn-danger btn-sm" %>
+              <%= link_to "Delete", task_path(task), method: :delete, data: { confirm: "Are you sure?" }, remote: true, class: "btn btn-danger btn-sm" %>
             </td>
           </tr>
         </tbody>

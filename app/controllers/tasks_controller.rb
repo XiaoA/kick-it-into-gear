@@ -1,6 +1,7 @@
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
-  
+
+
   def index
     @tasks = current_user.tasks.all.order("status ASC")
    end
@@ -37,7 +38,7 @@ class TasksController < ApplicationController
     if @task.update(task_params)
       redirect_to root_path, notice: 'Your task was updated.'
     else
-      render :edit 
+      render :edit
     end
   end
 
