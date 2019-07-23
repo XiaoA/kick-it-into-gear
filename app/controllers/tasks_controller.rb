@@ -1,7 +1,6 @@
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
-  helper ApplicationHelper
-
+  
   def index
     @tasks = current_user.tasks.all.order("status ASC")
   end

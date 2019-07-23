@@ -1,10 +1,7 @@
-class ApplicationHelper
+class TaskPresenter < ApplicationPresenter
 
-  def display_due_date(task)
-    if task.due_date != nil
-      task.due_date.strftime("%B %d, %Y")
-    else
-      return "No due date"
-    end
+  def display_due_date
+    return "No due date" unless @model.due_date
+    @model.due_date.strftime("%B %d, %Y")
   end
 end
