@@ -17,9 +17,3 @@
 //= require turbolinks
 //= require bootstrap-sprockets
 //= require_tree .
-
-jQuery(function($) {
-  $('.task-description').tooltip();
-});
-
-
