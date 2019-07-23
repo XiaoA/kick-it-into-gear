@@ -12,54 +12,57 @@
           <th scope="col">Delete</th>
         </tr>
       </thead>
-      <% @tasks.each do |task| %>
-        <tbody>
-          <tr>
-            <td>
-              <%= task.status.capitalize %>
-            </td>
-            
-            <td>
-              <div class="task-title" data-toggle="tooltip" data-placement="top" title="<%=task.title%>"><%= truncate task.title %></div>
-            </td>
+      <tbody>
+        <% @tasks.each do |t| %>
+          <% present(t) do |task| %>
+            <tr>
+              <td>
+                <%= task.status.capitalize %>
+              </td>
+              
+              <td>
+                <div class="task-title" data-toggle="tooltip" data-placement="top" title="<%=task.title%>"><%= truncate task.title %></div>
+              </td>
 
-            <td>
-              <div class="task-description data-toggle="tooltip" data-placement="top" title="<%=task.description%>">
-                <%= truncate task.description %>
-              </div>
-            </td>
+              <td>
+                <div class="task-description data-toggle="tooltip" data-placement="top" title="<%=task.description%>">
+                  <%= truncate task.description %>
+                </div>
+              </td>
 
-            <td>
-              <p class="task-due-date"><%= display_due_date(task) %></p>
-            </td>
+              <td>
+                <p class="task-due-date"><%= task.display_due_date %></p>
+              </td>
 
-            <td>
-              <%= link_to "Edit", edit_task_path(task),  
-              {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window', class: 'btn btn-primary btn-sm'} %>
-              <div id="modal-window" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title">Edit Task</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
+              <td>
+                <%= link_to "Edit", edit_task_path(task),  
+                {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window', class: 'btn btn-primary btn-sm'} %>
+                <div id="modal-window" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title">Edit Task</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </td>
+              </td>
 
-            <td>
-              <%= link_to "Delete", task_path(task), method: :delete, remote: true, class: "btn btn-danger btn-sm" %>
-            </td>
-          </tr>
-        </tbody>
-      <% end %>
+              <td>
+                <%= link_to "Delete", task_path(task), method: :delete, remote: true, class: "btn btn-danger btn-sm" %>
+              </td>
+            </tr>
+      </tbody>
+          <% end %>
+        <% end %>
     </table>
 
   <% else %>
     <h2 class="text-center"> You don't have any tasks yet. Let's create some!</h2>
   <% end %>
+
 </div>
 
