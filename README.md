@@ -1,24 +1,19 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+A simple TODO app.
 
-Things you may want to cover:
+##  Requirements
+- Rails 5.2.3
+- Ruby 2.63
+- Postgresql 10
+- Bootstrap 4.3
 
-* Ruby version
+# Future Ideas
+- Task priorities
+- Nested tasks (projects)
+- Third-Party integrations
+  - Google Calendar (calendar updates, reminders, alerts)
+  - Google Maps for location services
+- Delegation
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Feel free to suggest more ideas!
