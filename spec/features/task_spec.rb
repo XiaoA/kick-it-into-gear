@@ -87,7 +87,7 @@ describe "Task Actions", type: :feature do
       user = FactoryBot.create(:user)
       login_as(user, :scope => :user)
 
-      current_user = user
+      
       task = Task.create(title: "Buy bread", description: "Get some bread.", status: 0, user_id: user.id)   
       visit root_path
       click_on "Delete"
