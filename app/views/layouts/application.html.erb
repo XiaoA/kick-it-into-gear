@@ -11,7 +11,14 @@
 
   <body>
     <%= render "navbar" %>
-    <%= render "messages" %>
-    <%= yield %>
+    <div class="container">
+      <% flash.each do |key, value| %>
+        <div class="<%= flash_class(key) %>">
+          <%= value %>
+        </div>
+      <% end %>
+
+      <%= yield %>
+    </div>
   </body>
 </html>
