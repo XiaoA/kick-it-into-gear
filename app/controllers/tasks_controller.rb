@@ -17,7 +17,8 @@ class TasksController < ApplicationController
     @task = current_user.tasks.new(task_params)
     
     if @task.save
-      redirect_to root_path, notice: "Your task was created."
+      redirect_to root_path
+      flash[:notice] = "Your task was created."
     else
       render :new
     end
@@ -36,7 +37,8 @@ class TasksController < ApplicationController
 
   def update
     if @task.update(task_params)
-      redirect_to root_path, notice: 'Your task was updated.'
+      redirect_to root_path
+      flash[:notice] = 'Your task was updated.'
     else
       render :edit
     end
@@ -44,7 +46,8 @@ class TasksController < ApplicationController
 
   def destroy
     @task.destroy
-    redirect_to tasks_url, notice: 'Your task was deleted.'
+    redirect_to tasks_url
+    flash[:notice] = 'Your task was deleted.'
   end
 
   private
