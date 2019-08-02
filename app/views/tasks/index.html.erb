@@ -61,8 +61,14 @@
     </table>
 
   <% else %>
-    <h2 class="text-center"> You don't have any tasks yet. Let's create some!</h2>
+    <h2 class="text-center"> You don't have any tasks yet. Let's create one!</h2>
+    <div class="container">
+      <div class="row">
+        <div class="col text-center">
+          <%= link_to "Add your first task!", new_task_path, class: "btn btn-primary btn-lg text-center" %>
+        </div>
+      </div>
+    </div>
   <% end %>
-
 </div>
 

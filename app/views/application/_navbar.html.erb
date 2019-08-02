@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <%= link_to "Kick it into Gear!", root_path, class: "navbar-brand" %>
 
-  <% if user_signed_in? %>
+  <% if user_signed_in? && current_user.tasks.exists? %>
         <%= link_to 'Add Task', new_task_path,  {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window', class: 'btn btn-primary btn-sm'}  %>
   <% end %>
   
