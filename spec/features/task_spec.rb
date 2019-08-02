@@ -59,7 +59,8 @@ describe "Task Actions", type: :feature do
     end
 
     it "displays the current task" do
-      task = Task.create(title: "buy a cat", description: "Meow dui in ligula mollis ultricies.", status: 0, due_date: Date.today, user_id: @user.id)
+           task = Task.create(title: "buy a cat", description: "Meow dui in ligula mollis ultricies.", status: 0, due_date: Date.today, user_id: @user.id)
+           
       visit tasks_path(task)
       expect(page).to have_content(/buy a cat/)
     end
@@ -69,7 +70,8 @@ describe "Task Actions", type: :feature do
     before do
       @user = FactoryBot.create(:user)
       login_as(@user, :scope => :user)
-      @task = Task.create(title: "Buy bread", description: "Get some bread.", status: 0, user_id: @user.id)
+      #      @task = Task.create(title: "Buy bread", description: "Get some bread.", status: 0, user_id: @user.id)
+      @task = FactoryBot.create(:task)
     end
 
     it "can be edited" do
@@ -82,17 +84,16 @@ describe "Task Actions", type: :feature do
   end
 
   describe "delete", js: true do
-
     it "can be deleted" do
       user = FactoryBot.create(:user)
       login_as(user, :scope => :user)
 
-      
-      task = Task.create(title: "Buy bread", description: "Get some bread.", status: 0, user_id: user.id)   
-      visit root_path
-      click_on "Delete"
+      task = FactoryBot.create(:task)
 
-      expect(Task.count).to eq(0)
+      visit root_path
+      find(".btn-danger", match: :first).click
+      wait_for_ajax
+      expect(user.tasks.count).to eq(0)
     end
   end
 end
