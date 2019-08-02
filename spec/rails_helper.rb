@@ -8,6 +8,7 @@ require 'spec_helper'
 require 'rspec/rails'
 require 'capybara/rails'
 require 'capybara/apparition'
+require 'helpers/wait_for_ajax'
 Capybara.javascript_driver = :apparition
 
 ActiveRecord::Migration.maintain_test_schema!
