@@ -27,7 +27,7 @@ describe "Task Actions", type: :feature do
       login_as(@user, :scope => :user)
 
       visit root_path
-      click_on "Add Task"
+      click_on "Add a task!"
     end
 
     it "can create a new task" do
