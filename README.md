@@ -1,6 +1,7 @@
 # README
+**A simple TODO app.**
 
-A simple TODO app.
+(Because sometimes, you just need a little **kick** to get things done...)
 
 ##  Requirements
 - Rails 5.2.3
