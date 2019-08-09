@@ -25,19 +25,42 @@ describe "Task Actions", type: :feature do
     before do
       @user = FactoryBot.create(:user)
       login_as(@user, :scope => :user)
-
-      visit root_path
-      click_on "Add a task!"
     end
 
-    it "can create a new task" do
+    it "can create a first task" do
+      visit root_path(@user)
+
+      click_on "Add a Task!"
+
+
       fill_in "Title", with: "Buy veggies"
       fill_in "Description", with: "I need more veggies in my life"
 
+
       click_on "Create Task"
+      expect(Task.count).to eq(1)
+      expect(@user.tasks.first.title).to eq("Buy veggies")
     end
 
+    it "can add a new task to a list of tasks" do
+      @task = FactoryBot.create(:task, title: "My fun task")
+      visit root_path(@user)
+
+      click_on "Add Task"
+
+
+      fill_in "Title", with: "Buy more veggies"
+      fill_in "Description", with: "I need more veggies in my life"
+
+
+      click_on "Create Task"
+      expect(Task.count).to eq(2)
+    end
+    
+
     it "does not redirect from the Index page after saving a new task" do
+      visit root_path(@user)
+      click_on "Add a Task!"
       fill_in "Title", with: "Buy veggies"
       fill_in "Description", with: "carrots, cabbage, and cucumbers"
 
@@ -59,8 +82,8 @@ describe "Task Actions", type: :feature do
     end
 
     it "displays the current task" do
-           task = Task.create(title: "buy a cat", description: "Meow dui in ligula mollis ultricies.", status: 0, due_date: Date.today, user_id: @user.id)
-           
+      task = Task.create(title: "buy a cat", description: "Meow dui in ligula mollis ultricies.", status: 0, due_date: Date.today, user_id: @user.id)
+      
       visit tasks_path(task)
       expect(page).to have_content(/buy a cat/)
     end
@@ -70,7 +93,7 @@ describe "Task Actions", type: :feature do
     before do
       @user = FactoryBot.create(:user)
       login_as(@user, :scope => :user)
-      #      @task = Task.create(title: "Buy bread", description: "Get some bread.", status: 0, user_id: @user.id)
+
       @task = FactoryBot.create(:task)
     end
 
